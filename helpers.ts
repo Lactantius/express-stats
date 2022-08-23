@@ -38,6 +38,10 @@ interface Frequency {
   [n: number]: number;
 }
 
+function getMean(nums: number[]): number {
+  return nums.reduce((sum, n) => sum + n) / nums.length;
+}
+
 /*
  * There is probably a better way to do this
  */
@@ -46,10 +50,12 @@ function getMode(nums: number[]): number {
     obj[n] ? (obj[n] = obj[n] + 1) : (obj[n] = 1);
     return obj;
   }, <Frequency>{});
-  return Object.entries(frequency).reduce(
-    (highest, next) => (next[1] > highest[1] ? next : highest),
-    [0, 0]
-  )[0];
+  return Number(
+    Object.entries(frequency).reduce(
+      (highest, next) => (next[1] > highest[1] ? next : highest),
+      [0, 0]
+    )[0]
+  );
 }
 
 function getMedian(nums: number[]): number {
@@ -69,8 +75,15 @@ class ExpressError extends Error {
     super();
     this.message = message;
     this.status = status;
-    console.error(this.stack);
+    // console.error(this.stack); // Cannot test with this uncommented
   }
 }
 
-export { parseNumString, formatResponse, getMode, getMedian, ExpressError };
+export {
+  parseNumString,
+  formatResponse,
+  getMean,
+  getMode,
+  getMedian,
+  ExpressError,
+};

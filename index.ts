@@ -2,6 +2,7 @@ import express, { NextFunction } from "express";
 import {
   parseNumString,
   formatResponse,
+  getMean,
   getMode,
   getMedian,
   ExpressError,
@@ -13,7 +14,7 @@ app.use(express.json());
 
 app.get("/mean", (req, res) => {
   const nums = parseNumString(req.query.nums as string);
-  const mean = nums.reduce((sum, n) => sum + n) / nums.length;
+  const mean = getMean(nums);
   return res.json(formatResponse("mean", mean));
 });
 
