@@ -35,6 +35,16 @@ function getMode(nums: number[]): number {
   )[0];
 }
 
+function getMedian(nums: number[]): number {
+  const sorted = nums.slice().sort();
+  const midpoint = Math.floor(sorted.length / 2);
+  if (sorted.length % 2 === 1) {
+    return sorted[midpoint];
+  } else {
+    return (sorted[midpoint - 1] + sorted[midpoint]) / 2;
+  }
+}
+
 app.use(express.json());
 
 app.get("/mean", (req, res) => {
@@ -47,6 +57,12 @@ app.get("/mode", (req, res) => {
   const nums = parseNumString(req.query.nums as string);
   const mode = getMode(nums);
   return res.json(formatResponse("mode", mode));
+});
+
+app.get("/median", (req, res) => {
+  const nums = parseNumString(req.query.nums as string);
+  const median = getMedian(nums);
+  return res.json(formatResponse("median", median));
 });
 
 app.listen(3000, () => {
