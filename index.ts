@@ -10,8 +10,8 @@ app.use(express.json());
 
 app.get("/mean", (req, res) => {
   const nums = parseNumString(req.query.nums as string);
-  console.log(nums);
-  return res.json(nums);
+  const mean = nums.reduce((sum, n) => sum + n) / nums.length;
+  return res.json({ response: { operation: "mean", value: mean } });
 });
 
 app.listen(3000, () => {
