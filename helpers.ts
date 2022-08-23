@@ -1,6 +1,9 @@
 function parseNumString(numString: string): number[] {
   if (!numString) {
-    throw "Query string required";
+    throw new ExpressError(
+      "Query string with format 'nums=n1,n2' required",
+      400
+    );
   }
   const parsed = numString.split(",").reduce((nums, num) => {
     const toN = Number(num);
@@ -12,7 +15,10 @@ function parseNumString(numString: string): number[] {
   }, new Array());
   const invalid = parsed.filter((elem) => typeof elem === "string");
   if (invalid.length > 0) {
-    throw `${invalid}`;
+    throw new ExpressError(
+      `Query string contains invalid elements: ${invalid}`,
+      400
+    );
   }
   return parsed;
 }
