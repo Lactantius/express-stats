@@ -3,7 +3,22 @@ import express from "express";
 const app = express();
 
 function parseNumString(numString: string): number[] {
-  return numString.split(",").map((num) => Number(num));
+  if (!numString) {
+    throw "Query string required";
+  }
+  const parsed = numString.split(",").reduce((nums, num) => {
+    const toN = Number(num);
+    if (toN) {
+      return nums.concat(toN);
+    } else {
+      return nums.concat(num);
+    }
+  }, new Array());
+  const invalid = parsed.filter((elem) => typeof elem === "string");
+  if (invalid.length > 0) {
+    throw `${invalid}`;
+  }
+  return parsed;
 }
 
 interface ResponseJSON {
