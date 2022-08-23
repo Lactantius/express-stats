@@ -56,4 +56,15 @@ function getMedian(nums: number[]): number {
   }
 }
 
-export { parseNumString, formatResponse, getMode, getMedian };
+class ExpressError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super();
+    this.message = message;
+    this.status = status;
+    console.error(this.stack);
+  }
+}
+
+export { parseNumString, formatResponse, getMode, getMedian, ExpressError };
